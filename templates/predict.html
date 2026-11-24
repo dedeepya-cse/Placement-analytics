@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block content %}
+<h1>Placement Predictor</h1>
+<div class="card"><form method="post" class="f">
+{% for f, label, lo, hi, step in fields %}
+ <div><label for="{{ f }}">{{ label }}</label>
+ <input id="{{ f }}" name="{{ f }}" type="number" min="{{ lo }}" max="{{ hi }}" step="{{ step }}" required value="{{ values.get(f, '') }}"></div>
+{% endfor %}
+ <div style="align-self:end"><button type="submit">Predict</button></div></form></div>
+{% if result %}<br><div class="card"><div class="result {{ 'ok' if result.prob >= 50 else 'bad' }}">{{ result.verdict }} — {{ result.prob }}% probability</div></div>{% endif %}
+{% if history %}<br><div class="card"><h2>Recent predictions (saved in SQL)</h2>
+<table><tr><th>Time</th><th>CGPA</th><th>Coding</th><th>Probability</th><th>Verdict</th></tr>
+{% for h in history %}<tr><td>{{ h.created_at }}</td><td>{{ h.cgpa }}</td><td>{{ h.coding_score }}</td><td>{{ '%.1f'|format(h.probability*100) }}%</td><td>{{ h.verdict }}</td></tr>{% endfor %}</table></div>{% endif %}
+{% endblock %}

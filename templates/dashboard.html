@@ -1,0 +1,27 @@
+{% extends "base.html" %}{% block content %}
+<h1>Placement Dashboard</h1>
+<div class="grid g4">
+ <div class="card stat"><small>Total students</small><div>{{ totals.total }}</div></div>
+ <div class="card stat"><small>Placed</small><div>{{ totals.placed }}</div></div>
+ <div class="card stat"><small>Placement rate</small><div>{{ totals.rate }}%</div></div>
+ <div class="card stat"><small>Average CGPA</small><div>{{ totals.avg_cgpa }}</div></div>
+</div><br>
+<div class="grid g2">
+ <div class="card"><h2>Placement rate by branch</h2>
+  {% for r in by_branch %}<div class="bar-row"><span>{{ r.branch }}</span><div class="bar"><i style="width:{{ r.rate }}%"></i></div><em>{{ r.rate }}%</em></div>{% endfor %}</div>
+ <div class="card"><h2>Placement rate by CGPA band</h2>
+  {% for r in by_cgpa %}<div class="bar-row"><span>{{ r.band }}</span><div class="bar"><i style="width:{{ r.rate }}%"></i></div><em>{{ r.rate }}%</em></div>{% endfor %}</div>
+ <div class="card"><h2>Placement rate by internships</h2>
+  {% for r in by_intern %}<div class="bar-row"><span>{{ r.internships }} intern.</span><div class="bar"><i style="width:{{ r.rate }}%"></i></div><em>{{ r.rate }}%</em></div>{% endfor %}</div>
+ <div class="card"><h2>Top coder in each branch</h2>
+  <table><tr><th>Branch</th><th>Name</th><th>Coding</th><th>CGPA</th></tr>
+  {% for r in top %}<tr><td>{{ r.branch }}</td><td>{{ r.name }}</td><td>{{ r.coding_score }}</td><td>{{ r.cgpa }}</td></tr>{% endfor %}</table></div>
+</div><br>
+<div class="card"><h2>ML model comparison (5-fold CV on training set, then held-out test set)</h2>
+ <table><tr><th>Model</th><th>CV accuracy</th><th>Test accuracy</th><th>Test F1</th></tr>
+ {% for r in m.results %}<tr><td>{{ r.model }}{% if r.model == m.best %} <span class="pill p1">in use</span>{% endif %}</td>
+ <td>{{ '%.1f'|format(r.cv_accuracy*100) }}%</td><td>{{ '%.1f'|format(r.test_accuracy*100) }}%</td><td>{{ '%.3f'|format(r.test_f1) }}</td></tr>{% endfor %}</table>
+ <h2 style="margin-top:18px">Feature importance (Random Forest)</h2>
+ {% for k, v in m.importance.items() %}<div class="bar-row"><span style="width:170px">{{ k }}</span><div class="bar"><i style="width:{{ v*100*3 }}%"></i></div><em>{{ '%.1f'|format(v*100) }}%</em></div>{% endfor %}
+ <p class="note">Data is synthetic (randomly generated) for demonstration purposes.</p></div>
+{% endblock %}

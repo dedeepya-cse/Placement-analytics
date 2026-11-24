@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block content %}
+<h1>Students <small style="font-size:14px;color:var(--muted)">({{ total }} records)</small></h1>
+<form method="get" class="filters">
+ <div><label>Branch</label><select name="branch"><option value="">All</option>{% for b in branches %}<option {{ 'selected' if b == branch }}>{{ b }}</option>{% endfor %}</select></div>
+ <div><label>Status</label><select name="placed"><option value="">All</option><option value="1" {{ 'selected' if placed=='1' }}>Placed</option><option value="0" {{ 'selected' if placed=='0' }}>Not placed</option></select></div>
+ <button type="submit">Filter</button></form>
+<div class="card"><table><tr><th>Name</th><th>Branch</th><th>CGPA</th><th>Backlogs</th><th>Coding</th><th>Aptitude</th><th>Proj.</th><th>Intern.</th><th>Status</th></tr>
+{% for r in rows %}<tr><td>{{ r.name }}</td><td>{{ r.branch }}</td><td>{{ r.cgpa }}</td><td>{{ r.backlogs }}</td><td>{{ r.coding_score }}</td><td>{{ r.aptitude_score }}</td><td>{{ r.projects }}</td><td>{{ r.internships }}</td>
+<td><span class="pill p{{ r.placed }}">{{ 'Placed' if r.placed else 'Not placed' }}</span></td></tr>{% endfor %}</table>
+<div class="pager">{% if page > 1 %}<a class="btn" href="?branch={{ branch }}&placed={{ placed }}&page={{ page-1 }}">← Prev</a>{% endif %}
+<span>Page {{ page }} of {{ pages }}</span>
+{% if page < pages %}<a class="btn" href="?branch={{ branch }}&placed={{ placed }}&page={{ page+1 }}">Next →</a>{% endif %}</div></div>
+{% endblock %}

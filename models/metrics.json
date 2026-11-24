@@ -1,0 +1,55 @@
+{
+  "features": [
+    "cgpa",
+    "backlogs",
+    "coding_score",
+    "aptitude_score",
+    "communication_score",
+    "projects",
+    "internships",
+    "certifications"
+  ],
+  "results": [
+    {
+      "model": "Logistic Regression",
+      "cv_accuracy": 0.8188,
+      "test_accuracy": 0.7875,
+      "test_f1": 0.809
+    },
+    {
+      "model": "SVM (RBF)",
+      "cv_accuracy": 0.8203,
+      "test_accuracy": 0.7625,
+      "test_f1": 0.7889
+    },
+    {
+      "model": "Random Forest",
+      "cv_accuracy": 0.7938,
+      "test_accuracy": 0.7688,
+      "test_f1": 0.7978
+    },
+    {
+      "model": "Gradient Boosting",
+      "cv_accuracy": 0.7938,
+      "test_accuracy": 0.7562,
+      "test_f1": 0.7845
+    }
+  ],
+  "best": "SVM (RBF)",
+  "confusion": {
+    "tn": 51,
+    "fp": 23,
+    "fn": 15,
+    "tp": 71
+  },
+  "importance": {
+    "cgpa": 0.2374,
+    "coding_score": 0.2309,
+    "aptitude_score": 0.1297,
+    "backlogs": 0.1075,
+    "communication_score": 0.1048,
+    "projects": 0.0916,
+    "certifications": 0.0507,
+    "internships": 0.0474
+  }
+}
